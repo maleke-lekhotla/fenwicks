@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 
 from . import io
 
-from tensorflow.contrib.tpu.python.tpu import datasets as tpu_datasets
+# from tensorflow.contrib.tpu.python.tpu import datasets as tpu_datasets
 
 
 def float_tffeature(value) -> tf.train.Feature:
@@ -393,9 +393,9 @@ def tfrecord_ds(file_pattern: str, parser, batch_size: int, training: bool = Tru
     :param streaming: under construction.
     :return: a `tf.data` dataset satisfying the above descriptions.
     """
-    if streaming:
-        # fixme
-        dataset = tpu_datasets.StreamingFilesDataset(file_pattern, filetype='tfrecord', batch_transfer_size=batch_size)
+#     if streaming:
+#         # fixme
+#         dataset = tpu_datasets.StreamingFilesDataset(file_pattern, filetype='tfrecord', batch_transfer_size=batch_size)
     else:
         dataset = tf.data.Dataset.list_files(file_pattern)
         fetcher = tf.data.experimental.parallel_interleave(tfrecord_fetch_dataset, cycle_length=n_cores, sloppy=True)
